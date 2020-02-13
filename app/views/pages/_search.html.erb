@@ -1,0 +1,70 @@
+ <%
+=begin%>
+ <%= form_tag(search_path, :method => "get", class: 'navbar-form navbar-left') do %>
+      <div class="input-group">
+        <%= search_field_tag :search_city, params[:search_city], placeholder: "City", class: "form-control" %>
+        <div class="input-group-btn">
+          <%= button_tag "", :class => 'btn btn-info glyphicon glyphicon-search',:name => nil%>
+        </div>
+      </div>
+  <% end %>
+    <%= form_tag(search_path, :method => "get", class: 'navbar-form navbar-left') do %>
+      <div class="input-group">
+        <%= search_field_tag :search, params[:search_street], placeholder: "street", class: "form-control" %>
+        <div class="input-group-btn">
+          <%= button_tag "", :class => 'btn btn-info glyphicon glyphicon-search',:name => nil%>
+        </div>
+      </div>
+    <% end %>
+
+<%
+=end%>
+<div class="s002">
+      <%= form_tag(search_path, :method => "get", class: "form") do %>
+        <fieldset>
+          <legend>SEARCH CO-WORKING SPACE</legend>
+        </fieldset>
+        <div class="inner-form">
+          <div class="input-field first-wrap">
+            <div class="icon-wrap">
+              <i class="fa fa-road" aria-hidden="true"></i>
+            </div>
+            <%= search_field_tag :name, params[:name], placeholder: "Street of Palace",id: "search" %>
+          </div>
+          <div class="input-field second-wrap">
+            <div class="icon-wrap">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+            </div>
+            <%= text_field_tag :start_date, params[:start_date], placeholder: "Start Date", class: "datepicker"%>
+          </div>
+          <div class="input-field third-wrap">
+            <div class="icon-wrap">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+            </div>
+            <%= text_field_tag :end_date, params[:end_date], placeholder: "End Date", class: "datepicker"%>
+          </div>
+          <div class="input-field fouth-wrap">
+            <div class="icon-wrap">
+              <i class="fa fa-building" aria-hidden="true"></i>
+            </div>
+           <%= search_field_tag :city, params[:city], placeholder: "Thanh pho ",id: "search" %>
+          </div>
+          <div class="input-field fifth-wrap">
+            <%= button_tag "Search", :class => 'btn-search',:name => nil%>
+          </div>
+        </div>
+      <% end %>
+</div>
+    <script>
+      flatpickr(".datepicker",
+      {});
+
+    </script>
+    <script>
+      const choices = new Choices('[data-trigger]',
+      {
+        searchEnabled: false,
+        itemSelectText: '',
+      });
+
+    </script>

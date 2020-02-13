@@ -13,6 +13,9 @@ class User < ApplicationRecord
   before_save :downcase_email
   before_create :create_activation_digest
   has_secure_password
+  has_many :messages
+  belongs_to :user_role
+  has_many :booking_details
   class << self
     def digest string
       cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
@@ -57,8 +60,6 @@ class User < ApplicationRecord
     self.reset_token = User.new_token
     User.update(reset_digest: User.digest(reset_token), reset_sent_at: Time.zone.now)
   end
-
-  private
 
   def downcase_email
     email.downcase!

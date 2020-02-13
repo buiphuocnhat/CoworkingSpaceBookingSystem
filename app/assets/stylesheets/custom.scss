@@ -17,6 +17,10 @@ $alert-background-color: mediumseagreen;
 $users-border: gray-lighter;
 $navbar-nav: #f7f6f6;
 $navbar-menu: black;
+*{
+  padding: 0;
+  margin: 0;
+}
 .center.jumbotron {
     text-align: center;
 }
@@ -364,3 +368,7 @@ input {
   }
 }
 ///////////////////////////////////////
+
+
+/*Search Start*/
+/*Search End */

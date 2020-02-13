@@ -1,0 +1,13 @@
+<% @arrSpaces.each do |space| %>
+  <div class="thumbnail col-md-3">
+    <img src=<%=space.picture%> alt="Picture">
+      <div class="caption">
+        <h3><%=space.name%></h3>
+        <p><%=space.capacity%></p>
+        <p><%=space.venue.name%></p>
+        <p><%=space.venue.address.name%></p>
+        <p><%=space.venue.address.city%></p>
+        <p><a href="#" class="btn btn-primary " role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+      </div>
+  </div>
+<% end %>
