@@ -18,7 +18,7 @@ end
   SpacePrice.create(per_month: rand(1..100),per_day: rand(1..100), per_hour: rand(1..100))
 end
 30.times do
-  Space.create(name: Faker::Name.name, capacity: rand(1..100),description: Faker::Quotes::Shakespeare.romeo_and_juliet_quote, hour_open: Faker::Time, hour_close: Faker::Time, status:true,picture: Faker::Avatar.image, venue_id: rand(1..10), manager_id: rand(1..3), type_id: rand(1..10), space_price_id: rand(1..10))
+  Space.create(name: Faker::Name.name, capacity: rand(1..100),description: Faker::Quotes::Shakespeare.romeo_and_juliet_quote, hour_open: Faker::Time, hour_close: Faker::Time, status:true,picture: Faker::Avatar.image, venue_id: rand(1..10), manager_id: rand(1..3), type_id: rand(1..3), space_price_id: rand(1..10))
 end
 10.times do
   Payment.create(method:Faker::ProgrammingLanguage.name, status: true)

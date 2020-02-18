@@ -1,0 +1,25 @@
+ <%= form_tag(search_path, :method => "get", class: "form") do %>
+<nav id=>
+  <ul id="main">
+    <li><i class="fa fa-home" aria-hidden="true"></i>Loai phong
+      <ul class="drop">
+        <div>
+        <li><%=check_box_tag 'private_office','Private Office'%>Private Office</li>
+        <li><%=check_box_tag 'metting_room', 'Metting Room'%>Metting Room</li>
+        <li><%=check_box_tag 'desk','Desk'%>Desk</li>
+        </div>
+      </ul>
+    </li>
+    <li><i class="fa fa-clock-o" aria-hidden="true"></i>Theo
+      <ul class="drop">
+        <div>
+        <li><%=check_box_tag 'hour', 'hour'%>Hour</li>
+        <li><%=check_box_tag 'day', 'day'%>Day</li>
+        <li><%=check_box_tag 'month', 'month'%>Month</li>
+        </div>
+      </ul>
+    </li>
+  </ul>
+  <%= button_tag "Filter", :class => 'btn-search fa fa-filter',:id=> 'btn_filter',:name => nil%>
+</nav>
+<% end %>
