@@ -18,8 +18,9 @@
 =end%>
 <div>
   <div ><%= render partial: "search"%></div>
+  <div ><%= render partial: "filter"%></div>
   <div>
         <div class="container-fluid"><%= render partial: "thumbnail", object: @spaces %></div>
-        <div class="container-fluid"><%= will_paginate @arrSpaces %></div>
+        <div class="container-fluid"><%= will_paginate @results %></div>
   </div>
 </div>

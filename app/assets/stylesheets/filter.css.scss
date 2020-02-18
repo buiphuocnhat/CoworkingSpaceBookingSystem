@@ -1,0 +1,84 @@
+$min-width: 120px;
+$maincolor: #6BBE92;
+$secondarycolor: #c7ccc9;
+
+@mixin transform($value){
+  -webkit-transform: ($value);
+     -moz-transform: ($value);
+      -ms-transform: ($value);
+          transform: ($value);
+}
+@mixin transition($value){
+  -webkit-transition: ($value);
+     -moz-transition: ($value);
+      -ms-transition: ($value);
+          transition: ($value);
+}
+
+*{
+  box-sizing: border-box;
+}
+
+#main{
+  position: relative;
+  list-style: none;
+  background: $maincolor;
+  font-weight: 400;
+  height: 100%;
+  text-transform: uppercase;
+  display: inline-block;
+  padding: 0;
+  li{
+    font-size: 1.4rem;
+    display: inline-block;
+    position: relative;
+    padding: 15px 20px;
+    cursor: pointer;
+    z-index: 5;
+    height: 100%;
+    min-width: $min-width;
+    text-align: center;
+  }
+}
+li{
+  margin: 0;
+}
+.drop{
+    overflow: hidden;
+    list-style: none;
+    position: absolute;
+    padding: 0;
+    width: 100%;
+    left: 0;
+    top: 48px;
+    div{
+      @include transform(translate(0,-100%));
+      @include transition(all 0.5s 0.1s);
+      position: relative;
+    }
+    li{
+      display:block;
+      padding: 0;
+      width: 100%;
+      background: $secondarycolor !important;
+      text-align: center;
+    }
+  }
+
+
+@for $i from 1 through 4{
+  #main li:nth-child(#{$i}){
+    &:hover ul div{
+     @include transform(translate(0,0));
+    }
+
+  }
+}
+#filter{
+  height:50px!important;
+}
+#btn_filter{
+  width: 120px;
+  height: 50px;
+  background-color: $maincolor;
+}
