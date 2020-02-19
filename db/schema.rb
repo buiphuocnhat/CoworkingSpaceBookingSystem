@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_05_005218) do
+ActiveRecord::Schema.define(version: 2020_02_16_123218) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "city"
-    t.string "latitude"
-    t.string "longitude"
+    t.float "latitude"
+    t.float "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "venue_id"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 2020_02_05_005218) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "venue_id"
+    t.index ["venue_id"], name: "index_amenities_on_venue_id"
   end
 
   create_table "booking_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -37,8 +39,6 @@ ActiveRecord::Schema.define(version: 2020_02_05_005218) do
     t.datetime "updated_at", null: false
     t.bigint "space_id"
     t.bigint "user_id"
-    t.bigint "payment_id"
-    t.index ["payment_id"], name: "index_booking_details_on_payment_id"
     t.index ["space_id"], name: "index_booking_details_on_space_id"
     t.index ["user_id"], name: "index_booking_details_on_user_id"
   end
@@ -54,8 +54,21 @@ ActiveRecord::Schema.define(version: 2020_02_05_005218) do
   create_table "payments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "method"
     t.boolean "status"
+    t.decimal "total", precision: 10
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "booking_detail_id"
+    t.index ["booking_detail_id"], name: "index_payments_on_booking_detail_id"
+  end
+
+  create_table "prices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.decimal "per_month", precision: 10
+    t.decimal "per_day", precision: 10
+    t.decimal "per_hour", precision: 10
+    t.bigint "space_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["space_id"], name: "index_prices_on_space_id"
   end
 
   create_table "space_prices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -79,17 +92,17 @@ ActiveRecord::Schema.define(version: 2020_02_05_005218) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "venue_id"
-    t.bigint "manager_id"
+    t.bigint "user_id"
     t.bigint "type_id"
     t.bigint "space_price_id"
-    t.index ["manager_id"], name: "index_spaces_on_manager_id"
     t.index ["space_price_id"], name: "index_spaces_on_space_price_id"
     t.index ["type_id"], name: "index_spaces_on_type_id"
+    t.index ["user_id"], name: "index_spaces_on_user_id"
     t.index ["venue_id"], name: "index_spaces_on_venue_id"
   end
 
   create_table "types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "type_name"
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -111,6 +124,7 @@ ActiveRecord::Schema.define(version: 2020_02_05_005218) do
     t.datetime "activated_at"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
+    t.integer "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_role_id"
@@ -119,22 +133,24 @@ ActiveRecord::Schema.define(version: 2020_02_05_005218) do
 
   create_table "venues", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
-    t.boolean "status"
+    t.boolean "status", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "belongs_to_user_id"
-    t.index ["belongs_to_user_id"], name: "index_venues_on_belongs_to_user_id"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_venues_on_user_id"
   end
 
   add_foreign_key "addresses", "venues"
-  add_foreign_key "booking_details", "payments"
+  add_foreign_key "amenities", "venues"
   add_foreign_key "booking_details", "spaces"
   add_foreign_key "booking_details", "users"
   add_foreign_key "messages", "users"
+  add_foreign_key "payments", "booking_details"
+  add_foreign_key "prices", "spaces"
   add_foreign_key "spaces", "space_prices"
   add_foreign_key "spaces", "types"
-  add_foreign_key "spaces", "users", column: "manager_id"
+  add_foreign_key "spaces", "users"
   add_foreign_key "spaces", "venues"
   add_foreign_key "users", "user_roles"
-  add_foreign_key "venues", "users", column: "belongs_to_user_id"
+  add_foreign_key "venues", "users"
 end

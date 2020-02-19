@@ -1,0 +1,38 @@
+<%
+=begin%>
+ <% @bookings.each do |book| %>
+  <div class="thumbnail col-md-3">
+    <div class="caption">
+        <p><%=book.time_use_start%><p>
+        <p><%=book.time_use_close%></p>
+        <p><%=book.status%></p>
+    </div>
+  </div>
+<% end %>
+<%
+=end%>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Space name</th>
+      <th scope="col">Time use start</th>
+      <th scope="col">Time use close</th>
+      <th scope="col">Status</th>
+      <th scope="col">Payment</th>
+    </tr>
+  </thead>
+  <% @bookings.each do |book| %>
+  <tbody>
+    <tr>
+      <th scope="row"><%=book.space.name%></th>
+      <td><%=book.time_use_start%></td>
+      <td><%=book.time_use_close%></td>
+      <td><%=book.status%></td>
+      <td>
+        <%= link_to controller: "payments", action: "show", id: book.id do %>
+          <p class="btn btn-primary " role="button">Payment</p>
+        <% end %></td>
+      </tr>
+  </tbody>
+<% end %>
+</table>

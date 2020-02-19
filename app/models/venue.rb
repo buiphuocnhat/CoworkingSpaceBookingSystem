@@ -1,5 +1,9 @@
 class Venue < ApplicationRecord
-  has_many :spaces
-  has_one :address
-  belongs_to :user, class_name: "User", foreign_key: "belongs_to_user_id"
+  belongs_to :user
+  validates :user_id, presence: true
+  enum status: {block: 0, approve: 1}
+  has_one :address, dependent: :destroy
+  has_many :amenities, dependent: :destroy
+  has_many :spaces, dependent: :destroy
+  accepts_nested_attributes_for :amenities, :address, reject_if: proc{|attributes| attributes["name"].blank?}
 end

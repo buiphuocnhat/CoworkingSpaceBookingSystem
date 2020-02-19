@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  has_many :venues, dependent: :destroy
+  has_many :spaces, dependent: :destroy
+  has_many :booking_details
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
   attr_accessor :remember_token, :activation_token, :reset_token
   validates :name, presence: true, length: {maximum: Settings.name_max}
@@ -10,12 +13,10 @@ class User < ApplicationRecord
   validates :email, presence: true, length: {maximum: Settings.email_max},
                     format: {with: VALID_EMAIL_REGEX},
                     uniqueness: {case_sensitive: false}
+  enum role: {admin: 1, user: 0, moderator: 2}
   before_save :downcase_email
   before_create :create_activation_digest
   has_secure_password
-  has_many :messages
-  belongs_to :user_role
-  has_many :booking_details
   class << self
     def digest string
       cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
@@ -60,6 +61,8 @@ class User < ApplicationRecord
     self.reset_token = User.new_token
     User.update(reset_digest: User.digest(reset_token), reset_sent_at: Time.zone.now)
   end
+
+  private
 
   def downcase_email
     email.downcase!

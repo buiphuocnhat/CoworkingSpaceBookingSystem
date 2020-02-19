@@ -1,0 +1,82 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <article class="blog-card">
+        <div class="blog-card__background">
+          <div class="card__background--wrapper">
+            <div class="card__background--main" style="background-image: url(<%=@space.picture%>);">
+              <div class="card__background--layer"></div>
+            </div>
+          </div>
+        </div>
+        <div class="blog-card__head">
+          <span class="date__box">
+            <span class="date__day">open<%= @space.hour_open.strftime('%H:%M')%></span>
+            <span class="date__day">close<%= @space.hour_close.strftime('%H:%M')%></span>
+          </span>
+        </div>
+        <div class="blog-card__info">
+          <h5><%= @space.name %></h5>
+          <p>
+            <a class="icon-link mr-3"><i class="fa fa-pencil-square-o"></i> <%= @space.venue.name %></a>
+            <a  class="icon-link"><i class="fa fa-pie-chart" aria-hidden="true"></i>Capacity: <%= @space.capacity %></a>
+          </p>
+          <p><%=@space.description%></p>
+          <p><%=@space.venue.address.name%></p>
+          <p>
+            <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?zoom=17&size=400x300&center=#{@space.venue.address.latitude},#{@space.venue.address.longitude}&key=AIzaSyCuHVeQYcEJ3p3N3oh0DKblb4bEx3Nc14Q", alt: "Map" %>
+          </p>
+          <button type="button" class="btn btn--with-icon" id="btn_space"  data-toggle="modal" data-target="#exampleModal">
+            <i class="fa fa-paper-plane-o" aria-hidden="true"></i>Booking this space
+          </button>
+
+        </div>
+      </article>
+    </div>
+  </div>
+</div>
+
+<section class="detail-page">
+  <div class="container mt-5">
+
+  </div>
+</section>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Booking Detail</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <%= form_for @booking_detail, url: bookings_path, method: :post, remote: true do |f| %>
+      <div class="modal-body">
+      <div id="error_explanation">
+    <ul id="error-details">
+
+    </ul>
+  </div>
+          <%= f.label :time_use_start %>
+          <%= f.text_field :time_use_start, class: "form-control datepicker" %>
+          <%= f.label :time_use_close %>
+          <%= f.text_field :time_use_close, class: "form-control datepicker" %>
+          <%= hidden_field_tag "booking_detail[space_id]", params[:id] %>
+          payment
+          <%= select_tag :payment_method, options_for_select([[:bank, "bank"], [:cash_payment, "cash"]]), class: "form-control" %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <%= f.submit "Book", class:"btn btn-primary" %>
+      </div>
+        <% end %>
+    </div>
+  </div>
+</div>
+<script>
+      flatpickr(".datepicker",
+      {});
+
+</script>

@@ -3,7 +3,7 @@ class CreateBookingDetails < ActiveRecord::Migration[5.2]
     create_table :booking_details do |t|
       t.datetime :time_use_start
       t.datetime :time_use_close
-      t.boolean :status
+      t.boolean :status, :default => false
 
       t.timestamps
     end

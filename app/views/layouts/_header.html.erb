@@ -1,6 +1,8 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container"> <%= link_to t(".title_logo"),root_path, id: "logo" %>
-    <nav>
+    <%
+=begin%>
+ <nav>
       <ul class="nav navbar-nav navbar-left">
       <li>
          <div class="seach">
@@ -12,7 +14,10 @@
          </div>
       </li>
       </ul>
-    </nav><nav>
+    </nav>
+<%
+=end%>
+    <nav>
       <ul class="nav navbar-nav navbar-right">
         <li class="btn-group nav-item">
           <li>

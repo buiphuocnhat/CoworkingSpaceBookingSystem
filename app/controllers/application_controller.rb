@@ -14,4 +14,11 @@ class ApplicationController < ActionController::Base
   def default_url_options
     {locale: I18n.locale}
   end
+
+  def authentication_user!
+    return if logged_in?
+
+    flash[:notice] = "You must login"
+    redirect_to login_path
+  end
 end
